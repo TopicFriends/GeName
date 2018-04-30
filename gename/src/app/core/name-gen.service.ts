@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+const permutate = require('permutate');
+
 export class Range {
   constructor(
     public min: number,
@@ -8,7 +10,7 @@ export class Range {
 }
 
 export const substitutions = [
-  'ch k ck q',
+  'ch k ck q kk',
   's z',
   'f ph',
   'o u oo',
@@ -17,7 +19,7 @@ export const substitutions = [
 export const prefixes = 'pro flex'
 
 /** https://en.wikipedia.org/wiki/Suffix */
-export const endings = 'ity ia on or is tron ing'
+export const endings = 'ity ia on or is tron ing ix'
 
 
 export const vowels = 'aeiouy'
@@ -29,7 +31,13 @@ export class NameGenParams {
   consonantsInRow: Range
   vowelsInRow: Range
   charsOverlapBetweenWords: Range
+  charRepeat: Range
+  useInputWords: Range
+  inputWordRepeat: Range
 }
+
+export const inputWords = 'Code Soft Pro Uni Flex Sys Inno Tron' +
+  'Solution Meta Solid Gear Tech IT Create Machine Architect Focus'
 
 export function range(number: number, number2: number) {
   return new Range(number, number2)
@@ -42,12 +50,22 @@ export const defaultNameGenParams: NameGenParams = {
   consonantsInRow: range(1, 2),
   vowelsInRow: range(1, 3),
   charsOverlapBetweenWords: range(1, 4),
+  charRepeat: range(1, 1),
+  useInputWords: range(1, 3),
+  inputWordRepeat: range(1, 3) /* fun to check */,
 }
 
 
 @Injectable()
 export class NameGenService {
 
-  constructor() { }
+  constructor() {
+
+  }
+
+  /** https://www.numberempire.com/combinatorialcalculator.php */
+  permutate() {
+
+  }
 
 }
