@@ -144,12 +144,15 @@ export class NameGenService {
   }
 
   private permutationCombinationWithSuffixes(inputWordsArray: string[]) {
+    const numWordsArray = [1, 2]
     for ( let suffix of this.splitToArray(endings[0])) {
-      const cmb = Combinatorics.permutation(inputWordsArray, 1);
-      let outputArray = cmb.toArray().map(it => it.join('') + suffix).filter(it => it.length <= defaultNameGenParams.chars.maxInclusive)
-      console.log('Will check if IsAvailable Available : permutationCombination outputArray.length', outputArray.length);
-      for ( let name of outputArray ) {
-        this.checkDomainService.checkDomains(name)
+      for ( let numW of numWordsArray ) {
+        const cmb = Combinatorics.permutation(inputWordsArray, numW);
+        let outputArray = cmb.toArray().map(it => it.join('') + suffix).filter(it => it.length <= defaultNameGenParams.chars.maxInclusive)
+        console.log('Will check if IsAvailable Available : permutationCombination outputArray.length', outputArray.length);
+        for ( let name of outputArray ) {
+          this.checkDomainService.checkDomains(name)
+        }
       }
     }
   }
