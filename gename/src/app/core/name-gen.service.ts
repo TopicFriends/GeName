@@ -122,6 +122,7 @@ export class NameGenService {
     // const cmb = Combinatorics.permutation(['a', 'b', 'c'], 2);
     // const cmb = Combinatorics.permutationCombination(inputWordsArray, 2);
     const cmb = Combinatorics.permutation(inputWordsArray, 2);
-    console.log('permutationCombination', cmb.toArray().map(it => it.join('')));
+    let outputArray = cmb.toArray().map(it => it.join('')).filter(it => it.length <= defaultNameGenParams.chars.maxInclusive)
+    console.log('permutationCombination', outputArray);
   }
 }
