@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {CheckDomainService} from "./check-domain.service";
+import {Range} from './types'
 
 declare var require: any
 
@@ -15,13 +16,6 @@ var Combinatorics = require('js-combinatorics');
 
 
 
-export class Range {
-  constructor(
-    public min: number,
-    public maxInclusive: number,
-  ) {}
-}
-
 export const substitutions = [
   'ch k ck q kk',
   's z',
@@ -34,7 +28,7 @@ export const prefixes = 'pro flex'
 /**
  * https://en.wikipedia.org/wiki/Suffix */
 export const endings = [
-  'ity ify ia on ion or er is tron ing ix ium um',
+  'ity ify ia on ion or er is tron ing ix ium um IT',
   'heim stein berg burg', /* German endings */
   'zone',
 ]
@@ -60,7 +54,10 @@ export const inputWords = 'Dev App Wunder Ware Topic Code Soft Pro Uni Flex Sys 
   'Craft Good Trust '
 
 export const inputWordsFavorites = 'App Topic Topi Code Soft Pro Flex Sys Inno ' +
-  'Solution Meta Tech IT Focus Crea Create Craft Tek Gear Dev'
+  'Solution Meta Tech IT Focus Crea Craft Dev'
+
+export const inputWordsVeryFavorites = 'Topic Topi Pro Flex Sys Inno ' +
+  'Tech IT Crea Craft Tek Gear Dev'
 
 export const inputWordsShort = 'App Topic Topi Code Soft Pro Flex Sys Inno'
 
@@ -71,14 +68,14 @@ export const inputWordsWithSubsets = [
   'pro prog',
 ]
 
-export function range(number: number, number2: number) {
-  return new Range(number, number2)
+export function range(number: number, number2?: number) {
+  return new Range(number, number2 || number)
 }
 
 export const defaultNameGenParams: NameGenParams = {
   syllables: range(1, 3),
   syllableChars: range(1, 4),
-  chars: range(8, 9 /* 8 for codeinno; 9 for fancy endings */),
+  chars: range(8 /* 8 for codeinno; 9 for fancy endings */),
   consonantsInRow: range(1, 2),
   vowelsInRow: range(1, 3),
   charsOverlapBetweenWords: range(1, 4),
@@ -140,7 +137,7 @@ export class NameGenService {
     // const cmb = Combinatorics.permutation(['a', 'b', 'c'], 2);
     // const cmb = Combinatorics.permutationCombination(inputWordsArray, 2);
     const cmb = Combinatorics.permutation(inputWordsArray, 2);
-    let outputArray = cmb.toArray().map(it => it.join('')).filter(it => it.length <= defaultNameGenParams.chars.maxInclusive)
+    let outputArray = cmb.toArray().map(it => it.join('')).filter(it => lenInRange(it, defaultNameGenParams.chars))
     console.log('Will check if IsAvailable Available : permutationCombination outputArray.length', outputArray.length);
     for ( let name of outputArray ) {
       this.checkDomainService.checkDomains(name)
