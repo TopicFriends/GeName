@@ -15,7 +15,16 @@ export class NamesPageComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.checkDomainService.checkDomains();
+    this.doTheCheck();
+  }
+
+  doTheCheck(){
+    this.checkDomainService.checkDomains('google').subscribe(
+      response => console.log(response),
+      err => console.error(err.status),
+      () => ('alles gute')
+    );
+
   }
 
 }

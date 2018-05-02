@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {CheckDomainService} from "./check-domain.service";
 
 declare var require: any
 
@@ -87,7 +88,9 @@ export const defaultNameGenParams: NameGenParams = {
 @Injectable()
 export class NameGenService {
 
-  constructor() {
+  constructor(
+    private checkDomainService: CheckDomainService
+  ) {
     console.log('NameGenService ctor')
     // var inputWordsArray = ["a", "b", "c"]
 
@@ -114,7 +117,10 @@ export class NameGenService {
 
         break;
       }
-      console.log(iteroid.value.join(''));
+
+      const name = iteroid.value.join('');
+      console.log(name);
+      this.checkDomainService.checkDomains(name);
     }
   }
 

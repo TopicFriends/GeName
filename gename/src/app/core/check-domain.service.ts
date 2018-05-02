@@ -10,9 +10,9 @@ export class CheckDomainService {
 
   constructor(private http:HttpClient) { }
 
-  checkDomains(){
-    console.log("Hello domain");
-    //return this.http.get(API_ENDPOINT)
+  checkDomains(name: string){
+    //console.log(this.http.get(API_ENDPOINT));
+    return this.http.get(`https://www.${name}.com/`)
   }
 
 }
