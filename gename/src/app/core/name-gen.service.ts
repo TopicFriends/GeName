@@ -28,7 +28,7 @@ export const prefixes = 'pro flex'
 /**
  * https://en.wikipedia.org/wiki/Suffix */
 export const endings = [
-  'ity ify ia on ion or er is tron ing ix ium um IT',
+  'ity ify ia on ion or er is tron ing ix ium um IT y i o eo a at ly',
   'heim stein berg burg', /* German endings */
   'zone',
 ]
@@ -49,11 +49,11 @@ export class NameGenParams {
   skipFrontChars: Range
 }
 
-export const inputWords = 'Dev App Wunder Ware Topic Code Soft Pro Uni Flex Sys Inno Tron ' +
+export const inputWords = 'Dev App Wunder Ware Topic Code Codi Cod Soft Pro Uni Flex Sys Inno Tron ' +
   'Solution Meta Solid Gear Tech IT Create Machine Mach Architect Archi Arch Focus ' +
   'Craft Good Trust '
 
-export const inputWordsFavorites = 'App Topic Topi Code Soft Pro Flex Sys Inno ' +
+export const inputWordsFavorites = 'App Topic Topi Code Codi Cod Soft Pro Flex Sys Inno ' +
   'Solution Meta Tech IT Focus Crea Craft Dev'
 
 export const inputWordsVeryFavorites = 'Topic Topi Pro Flex Sys Inno ' +
