@@ -47,6 +47,13 @@ export const inputWords = 'Code Soft Pro Uni Flex Sys Inno Tron' +
   'Solution Meta Solid Gear Tech IT Create Machine Architect Focus' +
   'Craft'
 
+/* let's use this slightly more manually fine-tuned approach! */
+export const inputWordsWithSubsets = [
+  'code cod',
+  'dev deve devel',
+  'pro prog',
+]
+
 export function range(number: number, number2: number) {
   return new Range(number, number2)
 }
@@ -70,9 +77,10 @@ export class NameGenService {
 
   constructor() {
     console.log('NameGenService ctor')
-    // var array = ["a", "b", "c"]
+    // var inputWordsArray = ["a", "b", "c"]
 
     const inputWordsArray = inputWords.split(' ').map(word => word.trim())
+    // TODO replace with inputWordsWithSubsets
 
     var iterator = combinationsGenerator(inputWordsArray, 2);
     console.log('NameGenService', iterator)
@@ -85,6 +93,8 @@ export class NameGenService {
     while (true) {
       let iteroid = iterator.next()
       if ( iteroid.done ) {
+        console.log('value when done', iteroid.value); // 'yo'
+
         break;
       }
       console.log(iteroid.value.join('')); // 'yo'
