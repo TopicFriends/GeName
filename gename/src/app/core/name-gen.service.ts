@@ -45,7 +45,7 @@ export class NameGenParams {
 
 export const inputWords = 'Code Soft Pro Uni Flex Sys Inno Tron' +
   'Solution Meta Solid Gear Tech IT Create Machine Architect Focus' +
-  'Craft'
+  'Craft Good Trust'
 
 /* let's use this slightly more manually fine-tuned approach! */
 export const inputWordsWithSubsets = [
@@ -83,6 +83,9 @@ export class NameGenService {
     // TODO replace inputWordsArray with inputWordsWithSubsets approach
 
     var iterator = combinationsGenerator(inputWordsArray, 2);
+    /* Actually those are variations (order matters!), not combinations!
+       http://users.telenet.be/vdmoortel/dirk/Maths/PermVarComb.html */
+
     console.log('NameGenService', iterator)
 
 
