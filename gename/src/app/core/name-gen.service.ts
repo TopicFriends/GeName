@@ -34,7 +34,7 @@ export const prefixes = 'pro flex'
 /**
  * https://en.wikipedia.org/wiki/Suffix */
 export const endings = [
-  'ity ia on or is tron ing ix',
+  'ity ia on or is tron ing ix ium um',
   'heim stein berg burg', /* German endings */
   'zone',
 ]
@@ -78,7 +78,7 @@ export function range(number: number, number2: number) {
 export const defaultNameGenParams: NameGenParams = {
   syllables: range(1, 3),
   syllableChars: range(1, 4),
-  chars: range(3, 9 /* 8 for codeinno */),
+  chars: range(3, 9 /* 8 for codeinno; 9 for fancy endings */),
   consonantsInRow: range(1, 2),
   vowelsInRow: range(1, 3),
   charsOverlapBetweenWords: range(1, 4),
@@ -98,7 +98,7 @@ export class NameGenService {
     console.log('NameGenService ctor')
     // var inputWordsArray = ["a", "b", "c"]
 
-    const inputWordsArray = inputWordsFavorites.split(' ').map(word => word.trim())
+    const inputWordsArray = this.splitToArray(inputWordsFavorites)
     // TODO replace inputWordsArray with inputWordsWithSubsets approach
 
     // var iterator = combinationsGenerator(inputWordsArray, 2);
@@ -107,7 +107,8 @@ export class NameGenService {
 
     // console.log('NameGenService', iterator)
 
-    this.permutationCombination(inputWordsArray)
+    // this.permutationCombination(inputWordsArray)
+    this.permutationCombinationWithSuffixes(inputWordsArray)
 
 
     // while (true) {
@@ -124,6 +125,12 @@ export class NameGenService {
     // }
   }
 
+  private splitToArray(string) {
+    return string.split(' ')
+      .map(word => word.trim())
+      .filter(it => it.length > 0)
+  }
+
   private permutationCombination(inputWordsArray) {
     // const cmb = Combinatorics.permutation(['a', 'b', 'c'], 2);
     // const cmb = Combinatorics.permutationCombination(inputWordsArray, 2);
@@ -134,5 +141,16 @@ export class NameGenService {
       this.checkDomainService.checkDomains(name)
     }
     // console.log('permutationCombination', outputArray);
+  }
+
+  private permutationCombinationWithSuffixes(inputWordsArray: string[]) {
+    for ( let suffix of this.splitToArray(endings[0])) {
+      const cmb = Combinatorics.permutation(inputWordsArray, 1);
+      let outputArray = cmb.toArray().map(it => it.join('') + suffix).filter(it => it.length <= defaultNameGenParams.chars.maxInclusive)
+      console.log('Will check if IsAvailable Available : permutationCombination outputArray.length', outputArray.length);
+      for ( let name of outputArray ) {
+        this.checkDomainService.checkDomains(name)
+      }
+    }
   }
 }
