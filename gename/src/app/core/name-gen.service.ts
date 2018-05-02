@@ -55,11 +55,14 @@ export class NameGenParams {
   skipFrontChars: Range
 }
 
-export const inputWords = 'App Wunder Ware Topic Code Soft Pro Uni Flex Sys Inno Tron ' +
-  'Solution Meta Solid Gear Tech IT Create Machine Architect Focus ' +
-  'Craft Good Trust'
+export const inputWords = 'Dev App Wunder Ware Topic Code Soft Pro Uni Flex Sys Inno Tron ' +
+  'Solution Meta Solid Gear Tech IT Create Machine Mach Architect Archi Arch Focus ' +
+  'Craft Good Trust '
 
-export const inputWordsShort = 'App Wunder Topic Code Soft Pro Uni Flex Sys Inno Tron'
+export const inputWordsFavorites = 'App Topic Topi Code Soft Pro Flex Sys Inno ' +
+  'Solution Meta Tech IT Focus Crea Create Craft Tek Gear Dev'
+
+export const inputWordsShort = 'App Topic Topi Code Soft Pro Flex Sys Inno'
 
 /* let's use this slightly more manually fine-tuned approach! */
 export const inputWordsWithSubsets = [
@@ -75,7 +78,7 @@ export function range(number: number, number2: number) {
 export const defaultNameGenParams: NameGenParams = {
   syllables: range(1, 3),
   syllableChars: range(1, 4),
-  chars: range(3, 7),
+  chars: range(3, 9 /* 8 for codeinno */),
   consonantsInRow: range(1, 2),
   vowelsInRow: range(1, 3),
   charsOverlapBetweenWords: range(1, 4),
@@ -95,34 +98,30 @@ export class NameGenService {
     console.log('NameGenService ctor')
     // var inputWordsArray = ["a", "b", "c"]
 
-    const inputWordsArray = inputWords.split(' ').map(word => word.trim())
+    const inputWordsArray = inputWordsFavorites.split(' ').map(word => word.trim())
     // TODO replace inputWordsArray with inputWordsWithSubsets approach
 
-    var iterator = combinationsGenerator(inputWordsArray, 2);
+    // var iterator = combinationsGenerator(inputWordsArray, 2);
     /* Actually those are variations (order matters!), not combinations!
        http://users.telenet.be/vdmoortel/dirk/Maths/PermVarComb.html */
 
-    console.log('NameGenService', iterator)
+    // console.log('NameGenService', iterator)
 
     this.permutationCombination(inputWordsArray)
 
 
-    for (var item of iterator) {
-      console.log(item);
-    }
-
-    while (true) {
-      let iteroid = iterator.next()
-      if ( iteroid.done ) {
-        console.log('iteroid.value when done', iteroid.value);
-
-        break;
-      }
-
-      const name = iteroid.value.join('');
-      console.log(name);
-      this.checkDomainService.checkDomains(name);
-    }
+    // while (true) {
+    //   let iteroid = iterator.next()
+    //   if ( iteroid.done ) {
+    //     console.log('iteroid.value when done', iteroid.value);
+    //
+    //     break;
+    //   }
+    //
+    //   const name = iteroid.value.join('');
+    //   // console.log(name);
+    //   // this.checkDomainService.checkDomains(name);
+    // }
   }
 
   private permutationCombination(inputWordsArray) {
@@ -130,6 +129,10 @@ export class NameGenService {
     // const cmb = Combinatorics.permutationCombination(inputWordsArray, 2);
     const cmb = Combinatorics.permutation(inputWordsArray, 2);
     let outputArray = cmb.toArray().map(it => it.join('')).filter(it => it.length <= defaultNameGenParams.chars.maxInclusive)
-    console.log('permutationCombination', outputArray);
+    console.log('Will check if IsAvailable Available : permutationCombination outputArray.length', outputArray.length);
+    for ( let name of outputArray ) {
+      this.checkDomainService.checkDomains(name)
+    }
+    // console.log('permutationCombination', outputArray);
   }
 }
