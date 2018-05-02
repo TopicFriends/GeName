@@ -6,6 +6,12 @@ declare var require: any
 var combinationsGenerator = require("combinations-generator")
 
 
+/** From https://www.npmjs.com/package/js-combinatorics */
+var Combinatorics = require('js-combinatorics');
+
+// TODO: try also: https://www.npmjs.com/package/generatorics
+
+
 
 export class Range {
   constructor(
@@ -23,9 +29,13 @@ export const substitutions = [
 
 export const prefixes = 'pro flex'
 
-/** https://en.wikipedia.org/wiki/Suffix */
-export const endings = 'ity ia on or is tron ing ix' +
-  'heim stein berg burg' /* German endings */
+/**
+ * https://en.wikipedia.org/wiki/Suffix */
+export const endings = [
+  'ity ia on or is tron ing ix',
+  'heim stein berg burg', /* German endings */
+  'zone',
+]
 
 
 export const vowels = 'aeiouy'
@@ -43,9 +53,11 @@ export class NameGenParams {
   skipFrontChars: Range
 }
 
-export const inputWords = 'Code Soft Pro Uni Flex Sys Inno Tron' +
-  'Solution Meta Solid Gear Tech IT Create Machine Architect Focus' +
+export const inputWords = 'App Wunder Topic Code Soft Pro Uni Flex Sys Inno Tron ' +
+  'Solution Meta Solid Gear Tech IT Create Machine Architect Focus ' +
   'Craft Good Trust'
+
+export const inputWordsShort = 'App Wunder Topic Code Soft Pro Uni Flex Sys Inno Tron'
 
 /* let's use this slightly more manually fine-tuned approach! */
 export const inputWordsWithSubsets = [
@@ -79,7 +91,7 @@ export class NameGenService {
     console.log('NameGenService ctor')
     // var inputWordsArray = ["a", "b", "c"]
 
-    const inputWordsArray = inputWords.split(' ').map(word => word.trim())
+    const inputWordsArray = inputWordsShort.split(' ').map(word => word.trim())
     // TODO replace inputWordsArray with inputWordsWithSubsets approach
 
     var iterator = combinationsGenerator(inputWordsArray, 2);
@@ -87,6 +99,8 @@ export class NameGenService {
        http://users.telenet.be/vdmoortel/dirk/Maths/PermVarComb.html */
 
     console.log('NameGenService', iterator)
+
+    this.permutationCombination(inputWordsArray)
 
 
     for (var item of iterator) {
@@ -104,4 +118,10 @@ export class NameGenService {
     }
   }
 
+  private permutationCombination(inputWordsArray) {
+    // const cmb = Combinatorics.permutation(['a', 'b', 'c'], 2);
+    // const cmb = Combinatorics.permutationCombination(inputWordsArray, 2);
+    const cmb = Combinatorics.permutation(inputWordsArray, 2);
+    console.log('permutationCombination', cmb.toArray().map(it => it.join('')));
+  }
 }
