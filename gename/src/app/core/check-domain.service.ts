@@ -1,11 +1,13 @@
 import { API_ENDPOINT } from '../constants/constants';
-import { Injectable } from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import { HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class CheckDomainService {
   private UNAVAILABLE_PREFIX = 'unavailable__'
+  public availableDomainsArray = []
+  public availableDomainsObs = new EventEmitter()
 
 
 
@@ -51,6 +53,8 @@ export class CheckDomainService {
               // console.error(err.status, `https://${name}.com/`);
               if (err2.status === 0) {
                 console.log('IsAvailable:', `http://${name}.es/` )
+                this.availableDomainsArray.push(name)
+                this.availableDomainsObs.emit(this.availableDomainsArray)
               } else {
                 this.setDomainUnavailable(name)
               }

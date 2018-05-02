@@ -11,7 +11,7 @@ export class NamesPageComponent implements OnInit {
 
   constructor(
     public nameGenService: NameGenService,
-    private checkDomainService: CheckDomainService
+    public checkDomainService: CheckDomainService
   ) { }
 
   ngOnInit() {

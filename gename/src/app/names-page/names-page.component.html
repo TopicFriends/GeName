@@ -1,3 +1,7 @@
 <p>
   names-page works!
 </p>
+
+<span *ngFor="let name of checkDomainService.availableDomainsObs | async">
+  {{name}}
+</span>
