@@ -34,7 +34,7 @@ export const prefixes = 'pro flex'
 /**
  * https://en.wikipedia.org/wiki/Suffix */
 export const endings = [
-  'ity ia on or is tron ing ix ium um',
+  'ity ify ia on ion or is tron ing ix ium um',
   'heim stein berg burg', /* German endings */
   'zone',
 ]
@@ -144,16 +144,21 @@ export class NameGenService {
   }
 
   private permutationCombinationWithSuffixes(inputWordsArray: string[]) {
+    let totalToCheck = 0
     const numWordsArray = [1, 2]
     for ( let suffix of this.splitToArray(endings[0])) {
       for ( let numW of numWordsArray ) {
         const cmb = Combinatorics.permutation(inputWordsArray, numW);
         let outputArray = cmb.toArray().map(it => it.join('') + suffix).filter(it => it.length <= defaultNameGenParams.chars.maxInclusive)
+        totalToCheck += outputArray.length
         console.log('Will check if IsAvailable Available : permutationCombination outputArray.length', outputArray.length);
         for ( let name of outputArray ) {
           this.checkDomainService.checkDomains(name)
         }
       }
     }
+
+    console.log('Will check if IsAvailable Available : totalToCheck', totalToCheck);
+
   }
 }
