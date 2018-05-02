@@ -34,7 +34,7 @@ export const prefixes = 'pro flex'
 /**
  * https://en.wikipedia.org/wiki/Suffix */
 export const endings = [
-  'ity ify ia on ion or is tron ing ix ium um',
+  'ity ify ia on ion or er is tron ing ix ium um',
   'heim stein berg burg', /* German endings */
   'zone',
 ]
@@ -78,7 +78,7 @@ export function range(number: number, number2: number) {
 export const defaultNameGenParams: NameGenParams = {
   syllables: range(1, 3),
   syllableChars: range(1, 4),
-  chars: range(3, 9 /* 8 for codeinno; 9 for fancy endings */),
+  chars: range(8, 9 /* 8 for codeinno; 9 for fancy endings */),
   consonantsInRow: range(1, 2),
   vowelsInRow: range(1, 3),
   charsOverlapBetweenWords: range(1, 4),
@@ -88,6 +88,11 @@ export const defaultNameGenParams: NameGenParams = {
   skipFrontChars: range(0, 3) /* E.g. (t)Elephone*/
 }
 
+
+export function lenInRange(string: string, lenRange: Range) {
+  let len = string.length
+  return len >= lenRange.min && len <= lenRange.maxInclusive
+}
 
 @Injectable()
 export class NameGenService {
@@ -145,11 +150,11 @@ export class NameGenService {
 
   private permutationCombinationWithSuffixes(inputWordsArray: string[]) {
     let totalToCheck = 0
-    const numWordsArray = [1, 2]
+    const numWordsArray = [2/*, 2*/]
     for ( let suffix of this.splitToArray(endings[0])) {
       for ( let numW of numWordsArray ) {
         const cmb = Combinatorics.permutation(inputWordsArray, numW);
-        let outputArray = cmb.toArray().map(it => it.join('') + suffix).filter(it => it.length <= defaultNameGenParams.chars.maxInclusive)
+        let outputArray = cmb.toArray().map(it => it.join('') + suffix).filter(it => lenInRange(it, defaultNameGenParams.chars))
         totalToCheck += outputArray.length
         console.log('Will check if IsAvailable Available : permutationCombination outputArray.length', outputArray.length);
         for ( let name of outputArray ) {
