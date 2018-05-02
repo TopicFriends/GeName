@@ -75,7 +75,7 @@ export function range(number: number, number2?: number) {
 export const defaultNameGenParams: NameGenParams = {
   syllables: range(1, 3),
   syllableChars: range(1, 4),
-  chars: range(5, 9 /* 8 for codeinno; 9 for fancy endings */),
+  chars: range(4, 9 /* 8 for codeinno; 9 for fancy endings */),
   consonantsInRow: range(1, 2),
   vowelsInRow: range(1, 3),
   charsOverlapBetweenWords: range(1, 4),
@@ -100,7 +100,7 @@ export class NameGenService {
     console.log('NameGenService ctor')
     // var inputWordsArray = ["a", "b", "c"]
 
-    const inputWordsArray = this.splitToArray(inputWordsFavorites)
+    const inputWordsArray = this.splitToArray(inputWords)
     // TODO replace inputWordsArray with inputWordsWithSubsets approach
 
     // var iterator = combinationsGenerator(inputWordsArray, 2);
