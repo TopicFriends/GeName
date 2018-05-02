@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {NameGenService} from '../core/name-gen.service'
+import {CheckDomainService} from "../core/check-domain.service";
 
 @Component({
   selector: 'app-names-page',
@@ -9,10 +10,12 @@ import {NameGenService} from '../core/name-gen.service'
 export class NamesPageComponent implements OnInit {
 
   constructor(
-    public nameGenService: NameGenService
+    public nameGenService: NameGenService,
+    private checkDomainService: CheckDomainService
   ) { }
 
   ngOnInit() {
+    this.checkDomainService.checkDomains();
   }
 
 }
