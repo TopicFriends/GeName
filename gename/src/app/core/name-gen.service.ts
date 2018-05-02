@@ -4,6 +4,7 @@ import {CheckDomainService} from "./check-domain.service";
 declare var require: any
 
 // const permutate = require('permutate');
+/** https://npm.runkit.com/combinations-generator */
 var combinationsGenerator = require("combinations-generator")
 
 
@@ -94,7 +95,7 @@ export class NameGenService {
     console.log('NameGenService ctor')
     // var inputWordsArray = ["a", "b", "c"]
 
-    const inputWordsArray = inputWordsShort.split(' ').map(word => word.trim())
+    const inputWordsArray = inputWords.split(' ').map(word => word.trim())
     // TODO replace inputWordsArray with inputWordsWithSubsets approach
 
     var iterator = combinationsGenerator(inputWordsArray, 2);
