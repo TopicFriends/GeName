@@ -55,7 +55,7 @@ export class NameGenParams {
   skipFrontChars: Range
 }
 
-export const inputWords = 'App Wunder Topic Code Soft Pro Uni Flex Sys Inno Tron ' +
+export const inputWords = 'App Wunder Ware Topic Code Soft Pro Uni Flex Sys Inno Tron ' +
   'Solution Meta Solid Gear Tech IT Create Machine Architect Focus ' +
   'Craft Good Trust'
 
