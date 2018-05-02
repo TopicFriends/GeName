@@ -75,7 +75,7 @@ export function range(number: number, number2?: number) {
 export const defaultNameGenParams: NameGenParams = {
   syllables: range(1, 3),
   syllableChars: range(1, 4),
-  chars: range(5, 8 /* 8 for codeinno; 9 for fancy endings */),
+  chars: range(5, 9 /* 8 for codeinno; 9 for fancy endings */),
   consonantsInRow: range(1, 2),
   vowelsInRow: range(1, 3),
   charsOverlapBetweenWords: range(1, 4),
@@ -127,10 +127,10 @@ export class NameGenService {
     // }
   }
 
-  private splitToArray(string) {
+  private splitToArray(string, allowEmpty?) {
     return string.split(' ')
       .map(word => word.trim())
-      .filter(it => it.length > 0)
+      .filter(it => allowEmpty || it.length > 0)
   }
 
   private permutationCombination(inputWordsArray) {
@@ -148,7 +148,9 @@ export class NameGenService {
   private permutationCombinationWithSuffixes(inputWordsArray: string[]) {
     let totalToCheck = 0
     const numWordsArray = [2/*, 2*/]
-    for ( let suffix of this.splitToArray(endings[0])) {
+    let suffixes = this.splitToArray(endings[0])
+    suffixes.push('') /* allow without suffix */
+    for ( let suffix of suffixes) {
       for ( let numW of numWordsArray ) {
         const cmb = Combinatorics.permutation(inputWordsArray, numW);
         let outputArray = cmb.toArray().map(it => it.join('') + suffix).filter(it => lenInRange(it, defaultNameGenParams.chars))
