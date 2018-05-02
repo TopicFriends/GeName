@@ -75,7 +75,7 @@ export function range(number: number, number2?: number) {
 export const defaultNameGenParams: NameGenParams = {
   syllables: range(1, 3),
   syllableChars: range(1, 4),
-  chars: range(8 /* 8 for codeinno; 9 for fancy endings */),
+  chars: range(5, 8 /* 8 for codeinno; 9 for fancy endings */),
   consonantsInRow: range(1, 2),
   vowelsInRow: range(1, 3),
   charsOverlapBetweenWords: range(1, 4),
