@@ -80,7 +80,7 @@ export class NameGenService {
     // var inputWordsArray = ["a", "b", "c"]
 
     const inputWordsArray = inputWords.split(' ').map(word => word.trim())
-    // TODO replace with inputWordsWithSubsets
+    // TODO replace inputWordsArray with inputWordsWithSubsets approach
 
     var iterator = combinationsGenerator(inputWordsArray, 2);
     console.log('NameGenService', iterator)
@@ -93,17 +93,12 @@ export class NameGenService {
     while (true) {
       let iteroid = iterator.next()
       if ( iteroid.done ) {
-        console.log('value when done', iteroid.value); // 'yo'
+        console.log('iteroid.value when done', iteroid.value);
 
         break;
       }
-      console.log(iteroid.value.join('')); // 'yo'
+      console.log(iteroid.value.join(''));
     }
-  }
-
-  /** https://www.numberempire.com/combinatorialcalculator.php */
-  permutate() {
-
   }
 
 }
