@@ -14,6 +14,7 @@ var Combinatorics = require('js-combinatorics');
 
 // TODO: try also: https://www.npmjs.com/package/generatorics
 
+const numSearchResults = require("number-of-search-results");
 
 
 export const substitutions = [
@@ -172,6 +173,8 @@ export class NameGenService {
         console.log('Will check if IsAvailable Available : permutationCombination outputArray.length', outputArray.length);
         for ( let name of outputArray ) {
           this.checkDomainService.checkDomains(name)
+          // this.checkDomainService.checkNumberOfQueries(name)
+          // console.log(name)
         }
       }
     }

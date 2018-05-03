@@ -47,9 +47,14 @@ export class CheckDomainService {
   }
 
   checkNumberOfQueries(name: string) {
-    const google = numSearchResults.google(name).then((numResults) => {
-      console.log(name + ": " + numResults)
-    });
+    // const google = numSearchResults.google(name).then(
+    //   (numResults) => {
+    //   console.log(name + ": " + numResults)
+    // });
+    let bing = numSearchResults.bing(name).then(
+      (numResults) => {
+        console.log(name + ": " + numResults)
+      });
   }
 
   checkDomainsES(name: string) {
