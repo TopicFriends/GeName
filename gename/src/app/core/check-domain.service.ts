@@ -3,6 +3,11 @@ import {EventEmitter, Injectable} from '@angular/core';
 import { HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 
+declare var require: any
+
+
+const numSearchResults = require("number-of-search-results");
+
 @Injectable()
 export class CheckDomainService {
   private UNAVAILABLE_PREFIX = 'unavailable__'
@@ -39,6 +44,12 @@ export class CheckDomainService {
       },
       () => ('alles gute')
     );
+  }
+
+  checkNumberOfQueries(name: string) {
+    const google = numSearchResults.google(name).then((numResults) => {
+      console.log(name + ": " + numResults)
+    });
   }
 
   checkDomainsES(name: string) {

@@ -56,4 +56,4 @@ typings/
 
 # dotenv environment variables file
 .env
-
+/gename/.idea/inspectionProfiles/profiles_settings.xml
