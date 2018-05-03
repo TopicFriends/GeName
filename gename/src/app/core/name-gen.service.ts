@@ -51,7 +51,13 @@ export class NameGenParams {
 
 export const inputWords = 'Dev App Wunder Ware Topic Code Codi Cod Soft Pro Uni Flex Sys Inno Tron ' +
   'Solution Meta Solid Gear Tech IT Create Machine Mach Architect Archi Arch Focus ' +
-  'Craft Good Trust Info Inf In'
+  'Craft Good Trust Info Inf In Infor '
+
+/** removing non-favorite words (e.g. too specific) like soft, app, prog*/
+export const inputWords2 = 'Dev Wunder Ware Topic Pro Uni Flex Sys Inno Tron ' +
+  'Solution Meta Solid Gear Tech IT Create Machine Mach Architect Archi Arch Focus ' +
+  'Craft Good Trust Info Inf In Infor Logi Logic Log' +
+  'Adva Adv ' /* (advanced) */
 
 export const inputWordsFavorites = 'App Topic Topi Code Codi Cod Soft Pro Flex Sys Inno ' +
   'Solution Meta Tech IT Focus Crea Craft Dev'
@@ -75,7 +81,7 @@ export function range(number: number, number2?: number) {
 export const defaultNameGenParams: NameGenParams = {
   syllables: range(1, 3),
   syllableChars: range(1, 4),
-  chars: range(4, 9 /* 8 for codeinno; 9 for fancy endings */),
+  chars: range(5, 9 /* 8 for codeinno; 9 for fancy endings */),
   consonantsInRow: range(1, 2),
   vowelsInRow: range(1, 3),
   charsOverlapBetweenWords: range(1, 4),
@@ -100,7 +106,7 @@ export class NameGenService {
     console.log('NameGenService ctor')
     // var inputWordsArray = ["a", "b", "c"]
 
-    const inputWordsArray = this.splitToArray(inputWords)
+    const inputWordsArray = this.splitToArray(inputWords2)
     // TODO replace inputWordsArray with inputWordsWithSubsets approach
 
     // var iterator = combinationsGenerator(inputWordsArray, 2);
@@ -137,7 +143,11 @@ export class NameGenService {
     // const cmb = Combinatorics.permutation(['a', 'b', 'c'], 2);
     // const cmb = Combinatorics.permutationCombination(inputWordsArray, 2);
     const cmb = Combinatorics.permutation(inputWordsArray, 2);
-    let outputArray = cmb.toArray().map(it => it.join('')).filter(it => lenInRange(it, defaultNameGenParams.chars))
+    let outputArray = cmb.toArray().map(it => it.join(''))
+      .filter(it =>
+        lenInRange(it, defaultNameGenParams.chars)
+        && it.toLowerCase().includes('topi')
+      )
     console.log('Will check if IsAvailable Available : permutationCombination outputArray.length', outputArray.length);
     for ( let name of outputArray ) {
       this.checkDomainService.checkDomains(name)
@@ -153,7 +163,11 @@ export class NameGenService {
     for ( let suffix of suffixes) {
       for ( let numW of numWordsArray ) {
         const cmb = Combinatorics.permutation(inputWordsArray, numW);
-        let outputArray = cmb.toArray().map(it => it.join('') + suffix).filter(it => lenInRange(it, defaultNameGenParams.chars))
+        let outputArray = cmb.toArray().map(it => it.join('') + suffix)
+          .filter(it =>
+            lenInRange(it, defaultNameGenParams.chars)
+            && it.toLowerCase().includes('topi')
+          )
         totalToCheck += outputArray.length
         console.log('Will check if IsAvailable Available : permutationCombination outputArray.length', outputArray.length);
         for ( let name of outputArray ) {
