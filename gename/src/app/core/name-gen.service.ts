@@ -147,7 +147,7 @@ export class NameGenService {
     let outputArray = cmb.toArray().map(it => it.join(''))
       .filter(it =>
         lenInRange(it, defaultNameGenParams.chars)
-        && it.toLowerCase().includes('topi')
+        && it.toLowerCase().includes('topic')
       )
     console.log('Will check if IsAvailable Available : permutationCombination outputArray.length', outputArray.length);
     for ( let name of outputArray ) {
